@@ -1,183 +1,248 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PhotoFiltering {
 	public partial class MainForm : Form {
 
-		private static string[] availableValuesSTRMedianFilter = new string[] {
+		private static readonly string[] availableValuesSTRMedianFilter = new string[] {
 			"3x3", "5x5", "7x7", "9x9", "11x11", "13x13", "15x15"
 		};
 
-		private static int[] availableValuesINTMedianFilter = new int[] {
+		private static readonly int[] availableValuesINTMedianFilter = new int[] {
 			3, 5, 7, 9, 11, 13, 15
 		};
 
+		public static Bitmap originalImageForRecover;
+		public static Bitmap originalImage;
+		public static Bitmap modifiedImage;
+
+		private static bool isFileOpened = false;
+
 		public MainForm() {
-			// инициализирую компоненты формы
+			// Инициализация компонентов формы
 			InitializeComponent();
 
-			// добавляю в выпадающий список наименования доступных опций
-			comboBox_median_filter.Items.AddRange(availableValuesSTRMedianFilter);
-			comboBox_median_filter.SelectedIndex = 0;
-
-			// добавляю в выпадающий список наименования доступных опций
-			comboBox_gaussian_filter.Items.AddRange(availableValuesSTRMedianFilter);
-			comboBox_gaussian_filter.SelectedIndex = 0;
+			// Добавление в выпадающий список наименований доступных опций
+			// Для медианного фильтра и фильтра Гаусса
+			comboBoxMedianFilter.Items.AddRange(availableValuesSTRMedianFilter);
+			comboBoxMedianFilter.SelectedIndex = 0;
+			comboBoxGaussianFilter.Items.AddRange(availableValuesSTRMedianFilter);
+			comboBoxGaussianFilter.SelectedIndex = 0;
 		}
 
-		public static Bitmap original_image_for_recover;
-		public static Bitmap original_image;
-		public static Bitmap modified_image;
+		/// <summary>
+		/// Обновить элементы на форме
+		/// </summary>
+		private void UpdateGUI() {
+			pictureBoxOriginal.Image = originalImage;
+			pictureBoxModified.Image = modifiedImage;
+		}
 
-		public static string full_name_of_image = "\0";
+		/// <summary>
+		/// Показать модифицированное изображение
+		/// </summary>
+		public void ShowModified() {
+			pictureBoxModified.Image = modifiedImage;
+		}
 
-		private void OpenFile_ToolStripMenuItem_Click(object sender, EventArgs e) {
-			/* Выбор изображение с помощью диалогового окна */
+		/// <summary>
+		/// Эвент выбора изображения с помощью диалогового окна
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ToolStripMenuItemOpenFileClick(object sender, EventArgs e) {
+			OpenFileDialog openFileDialog = new OpenFileDialog {
+				Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*"
+			};
 
-			OpenFileDialog open_dialog = new OpenFileDialog();
-			open_dialog.Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*";
-
-			if (open_dialog.ShowDialog() == DialogResult.OK) {
+			if (openFileDialog.ShowDialog() == DialogResult.OK) {
 				try {
-					full_name_of_image = open_dialog.FileName;
+					isFileOpened = openFileDialog.FileName != "\0";
 
-					original_image = new Bitmap(open_dialog.FileName);
-					modified_image = new Bitmap(open_dialog.FileName);
-					original_image_for_recover = new Bitmap(open_dialog.FileName);
+					originalImage = new Bitmap(openFileDialog.FileName);
+					modifiedImage = new Bitmap(openFileDialog.FileName);
+					originalImageForRecover = new Bitmap(openFileDialog.FileName);
 
 					UpdateGUI();
 				}
 				catch {
-					full_name_of_image = "\0";
-					DialogResult result = MessageBox.Show("Невозможно открыть выбранный файл", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					isFileOpened = false;
+
+					MessageBox.Show(
+						"Невозможно открыть выбранный файл",
+						"Ошибка",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Error
+					);
 				}
 			}
 		}
 
-		private void SaveAsFile_ToolStripMenuItem_Click(object sender, EventArgs e) {
-			/* Сохранение изображения с помощью диалогового окна */
+		/// <summary>
+		/// Эвент сохранения изображения с помощью диалогового окна
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ToolStripMenuItemSaveAsFileClick(object sender, EventArgs e) {
+			if (!isFileOpened) {
+				return;
+			}
 
-			if (full_name_of_image != "\0") {
-				SaveFileDialog savedialog = new SaveFileDialog();
-				savedialog.Title = "Сохранить картинку как...";
-				savedialog.OverwritePrompt = true;
-				savedialog.CheckPathExists = true;
-				savedialog.Filter = "Image Files(*.JPG)|*.JPG|Image Files(*.PNG)|*.PNG|All files (*.*)|*.*";
-				savedialog.ShowHelp = true;
-				if (savedialog.ShowDialog() == DialogResult.OK) {
-					try {
-						modified_image.Save(savedialog.FileName, System.Drawing.Imaging.ImageFormat.Jpeg);
-					}
-					catch {
-						MessageBox.Show("Невозможно сохранить изображение", "Ошибка",
-						MessageBoxButtons.OK, MessageBoxIcon.Error);
-					}
+			SaveFileDialog saveFileDialog = new SaveFileDialog {
+				Title = "Сохранить картинку как...",
+				OverwritePrompt = true,
+				CheckPathExists = true,
+				Filter = "Image Files(*.JPG)|*.JPG|Image Files(*.PNG)|*.PNG|All files (*.*)|*.*",
+				ShowHelp = true
+			};
+
+			if (saveFileDialog.ShowDialog() == DialogResult.OK) {
+				try {
+					modifiedImage.Save(
+						saveFileDialog.FileName,
+						System.Drawing.Imaging.ImageFormat.Jpeg
+					);
+				}
+				catch {
+					MessageBox.Show(
+						"Невозможно сохранить изображение",
+						"Ошибка",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Error
+					);
 				}
 			}
 		}
 
-		private void OriginalRecover_ToolStripMenuItem_Click(object sender, EventArgs e) {
-			/* Восстановить исходное изображение как текущее */
-			if (full_name_of_image != "\0") {
-				original_image.Dispose();
-				modified_image.Dispose();
-
-				original_image = new Bitmap(original_image_for_recover);
-				modified_image = new Bitmap(original_image_for_recover);
-
-				UpdateGUI();
+		/// <summary>
+		/// Эвент нажатия на кнопку для восстановления исходного изображения как текущего
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ToolStripMenuItemOriginalRecoverClick(object sender, EventArgs e) {
+			if (!isFileOpened) {
+				return;
 			}
+
+			originalImage.Dispose();
+			modifiedImage.Dispose();
+
+			originalImage = new Bitmap(originalImageForRecover);
+			modifiedImage = new Bitmap(originalImageForRecover);
+
+			UpdateGUI();
 		}
 
-		private void UpdateGUI() {
-			/* Обновить элементы управления на форме */
-			pictureBox_original.Image = original_image;
-			pictureBox_modified.Image = modified_image;
-		}
-
-		public void ShowModified() {
-			pictureBox_modified.Image = modified_image;
-		}
-
-		private void button_remember_modified_Click(object sender, EventArgs e) {
-			/* Сохранить последнюю модификацию как текущее изображение */
-			if (full_name_of_image != "\0") {
-				Bitmap temp = new Bitmap(modified_image);
-
-				original_image.Dispose();
-				modified_image.Dispose();
-				original_image = new Bitmap(temp);
-				modified_image = new Bitmap(temp);
-
-				temp.Dispose();
-
-				UpdateGUI();
+		/// <summary>
+		/// Эвент нажатия на кнопку для сохранения последней модификации в качестве текущего изображения
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonRememberModifiedClick(object sender, EventArgs e) {
+			if (!isFileOpened) {
+				return;
 			}
+
+			Bitmap tmp = new Bitmap(modifiedImage);
+
+			originalImage.Dispose();
+			modifiedImage.Dispose();
+
+			originalImage = new Bitmap(tmp);
+			modifiedImage = new Bitmap(tmp);
+
+			tmp.Dispose();
+
+			UpdateGUI();
 		}
 
-		private void button_median_filter_Click(object sender, EventArgs e) {
-			/* Применить медианный фильтр */
-			if (full_name_of_image != "\0") {
-				int index = availableValuesINTMedianFilter[comboBox_median_filter.SelectedIndex];
-
-				MedianFilter.Apply(original_image, ref modified_image, index);
-
-				ShowModified();
+		/// <summary>
+		/// Эвент нажатия на кнопку применения медианного фильтра
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonMedianFilterClick(object sender, EventArgs e) {
+			if (!isFileOpened) {
+				return;
 			}
+
+			MedianFilter.Apply(
+				originalImage,
+				ref modifiedImage,
+				availableValuesINTMedianFilter[comboBoxMedianFilter.SelectedIndex]
+			);
+
+			ShowModified();
 		}
 
-		private void button_gaussian_filter_Click(object sender, EventArgs e) {
-			/* Применить фильтр Гаусса */
-			if (full_name_of_image != "\0") {
-
-				int l = availableValuesINTMedianFilter[comboBox_gaussian_filter.SelectedIndex]; 
-				double w = (double)numericUpDown_gaussian_filter.Value;
-
-				GaussianFilter.Apply(original_image, ref modified_image, l, w);
-
-				ShowModified();
+		/// <summary>
+		/// Эвент нажатия на кнопку применения фильтра Гаусса
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonGaussianFilterClick(object sender, EventArgs e) {
+			if (!isFileOpened) {
+				return;
 			}
+
+			GaussianFilter.Apply(
+				originalImage,
+				ref modifiedImage,
+				availableValuesINTMedianFilter[comboBoxGaussianFilter.SelectedIndex],
+				(double)numericUpDownGaussianFilterWeight.Value
+			);
+
+			ShowModified();
 		}
 
-		private void button_sobel_operator_Click(object sender, EventArgs e) {
-			/* Применить Оконтуривание по Собелю */
-			if (full_name_of_image != "\0") {
-
-				SobelOperator.Apply(original_image, ref modified_image);
-
-				ShowModified();
+		/// <summary>
+		/// Эвент нажатия на кнопку применения оконтуривания по Собелю
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonSobelOperatorClick(object sender, EventArgs e) {
+			if (!isFileOpened) {
+				return;
 			}
+
+			SobelOperator.Apply(originalImage, ref modifiedImage);
+
+			ShowModified();
 		}
 
-		private void button_add_noise_Click(object sender, EventArgs e) {
-			/* Применить Оконтуривание по Собелю */
-			if (full_name_of_image != "\0") {
-
-				int size = (int)numericUpDown_noise.Value;
-
-				Noise.AddPoints(ref modified_image, 100, size);
-
-				ShowModified();
+		/// <summary>
+		/// Эвент нажатия на кнопку для добавления шума
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonAddNoiseClick(object sender, EventArgs e) {
+			if (!isFileOpened) {
+				return;
 			}
+
+			Noise.AddPoints(ref modifiedImage, 100, (int)numericUpDownNoise.Value);
+
+			ShowModified();
 		}
 
-		private void button_sharpening_Click(object sender, EventArgs e) {
-			/* Применить повышение резкости */
-			if (full_name_of_image != "\0") {
-
-				double k = (double)numericUpDown_sharpening_degree.Value;
-
-				Sharpening.Apply(original_image, ref modified_image, k);
-
-				ShowModified();
+		/// <summary>
+		/// Эвент нажатия на кнопку для повышения резкости
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonSharpeningClick(object sender, EventArgs e) {
+			if (!isFileOpened) {
+				return;
 			}
+
+			Sharpening.Apply(
+				originalImage,
+				ref modifiedImage,
+				(double)numericUpDownSharpeningDegree.Value
+			);
+
+			ShowModified();
 		}
 	}
 }

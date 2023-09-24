@@ -26,35 +26,35 @@ namespace PhotoFiltering {
 		private void InitializeComponent() {
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.File_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.OpenFile_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.SaveAsFile_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.OriginalRecover_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ToolStripMenuItemOpenFile = new System.Windows.Forms.ToolStripMenuItem();
+			this.ToolStripMenuItemSaveAsFile = new System.Windows.Forms.ToolStripMenuItem();
+			this.ToolStripMenuItemOriginalRecover = new System.Windows.Forms.ToolStripMenuItem();
 			this.label_original_image = new System.Windows.Forms.Label();
 			this.label_modified_image = new System.Windows.Forms.Label();
-			this.pictureBox_original = new System.Windows.Forms.PictureBox();
-			this.pictureBox_modified = new System.Windows.Forms.PictureBox();
-			this.button_remember_modified = new System.Windows.Forms.Button();
-			this.button_median_filter = new System.Windows.Forms.Button();
-			this.button_gaussian_filter = new System.Windows.Forms.Button();
-			this.button_sobel_operator = new System.Windows.Forms.Button();
-			this.comboBox_median_filter = new System.Windows.Forms.ComboBox();
-			this.button_add_noise = new System.Windows.Forms.Button();
-			this.comboBox_gaussian_filter = new System.Windows.Forms.ComboBox();
-			this.numericUpDown_gaussian_filter = new System.Windows.Forms.NumericUpDown();
-			this.button_sharpening = new System.Windows.Forms.Button();
-			this.numericUpDown_sharpening_degree = new System.Windows.Forms.NumericUpDown();
-			this.numericUpDown_noise = new System.Windows.Forms.NumericUpDown();
+			this.pictureBoxOriginal = new System.Windows.Forms.PictureBox();
+			this.pictureBoxModified = new System.Windows.Forms.PictureBox();
+			this.buttonRememberModified = new System.Windows.Forms.Button();
+			this.buttonMedianFilter = new System.Windows.Forms.Button();
+			this.buttonGaussianFilter = new System.Windows.Forms.Button();
+			this.buttonSobelOperator = new System.Windows.Forms.Button();
+			this.comboBoxMedianFilter = new System.Windows.Forms.ComboBox();
+			this.buttonAddNoise = new System.Windows.Forms.Button();
+			this.comboBoxGaussianFilter = new System.Windows.Forms.ComboBox();
+			this.numericUpDownGaussianFilterWeight = new System.Windows.Forms.NumericUpDown();
+			this.buttonSharpening = new System.Windows.Forms.Button();
+			this.numericUpDownSharpeningDegree = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDownNoise = new System.Windows.Forms.NumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.menuStrip.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox_original)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox_modified)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_gaussian_filter)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_sharpening_degree)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_noise)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxOriginal)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxModified)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownGaussianFilterWeight)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownSharpeningDegree)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNoise)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip
@@ -71,40 +71,40 @@ namespace PhotoFiltering {
 			// File_ToolStripMenuItem
 			// 
 			this.File_ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OpenFile_ToolStripMenuItem,
-            this.SaveAsFile_ToolStripMenuItem,
-            this.OriginalRecover_ToolStripMenuItem});
+            this.ToolStripMenuItemOpenFile,
+            this.ToolStripMenuItemSaveAsFile,
+            this.ToolStripMenuItemOriginalRecover});
 			this.File_ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.File_ToolStripMenuItem.Name = "File_ToolStripMenuItem";
 			this.File_ToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
 			this.File_ToolStripMenuItem.Text = "Файл";
 			// 
-			// OpenFile_ToolStripMenuItem
+			// ToolStripMenuItemOpenFile
 			// 
-			this.OpenFile_ToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-			this.OpenFile_ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-			this.OpenFile_ToolStripMenuItem.Name = "OpenFile_ToolStripMenuItem";
-			this.OpenFile_ToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-			this.OpenFile_ToolStripMenuItem.Text = "Открыть";
-			this.OpenFile_ToolStripMenuItem.Click += new System.EventHandler(this.OpenFile_ToolStripMenuItem_Click);
+			this.ToolStripMenuItemOpenFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+			this.ToolStripMenuItemOpenFile.ForeColor = System.Drawing.Color.White;
+			this.ToolStripMenuItemOpenFile.Name = "ToolStripMenuItemOpenFile";
+			this.ToolStripMenuItemOpenFile.Size = new System.Drawing.Size(204, 22);
+			this.ToolStripMenuItemOpenFile.Text = "Открыть";
+			this.ToolStripMenuItemOpenFile.Click += new System.EventHandler(this.ToolStripMenuItemOpenFileClick);
 			// 
-			// SaveAsFile_ToolStripMenuItem
+			// ToolStripMenuItemSaveAsFile
 			// 
-			this.SaveAsFile_ToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-			this.SaveAsFile_ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-			this.SaveAsFile_ToolStripMenuItem.Name = "SaveAsFile_ToolStripMenuItem";
-			this.SaveAsFile_ToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-			this.SaveAsFile_ToolStripMenuItem.Text = "Сохранить как...";
-			this.SaveAsFile_ToolStripMenuItem.Click += new System.EventHandler(this.SaveAsFile_ToolStripMenuItem_Click);
+			this.ToolStripMenuItemSaveAsFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+			this.ToolStripMenuItemSaveAsFile.ForeColor = System.Drawing.Color.White;
+			this.ToolStripMenuItemSaveAsFile.Name = "ToolStripMenuItemSaveAsFile";
+			this.ToolStripMenuItemSaveAsFile.Size = new System.Drawing.Size(204, 22);
+			this.ToolStripMenuItemSaveAsFile.Text = "Сохранить как...";
+			this.ToolStripMenuItemSaveAsFile.Click += new System.EventHandler(this.ToolStripMenuItemSaveAsFileClick);
 			// 
-			// OriginalRecover_ToolStripMenuItem
+			// ToolStripMenuItemOriginalRecover
 			// 
-			this.OriginalRecover_ToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-			this.OriginalRecover_ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-			this.OriginalRecover_ToolStripMenuItem.Name = "OriginalRecover_ToolStripMenuItem";
-			this.OriginalRecover_ToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-			this.OriginalRecover_ToolStripMenuItem.Text = "Восстановить исходное";
-			this.OriginalRecover_ToolStripMenuItem.Click += new System.EventHandler(this.OriginalRecover_ToolStripMenuItem_Click);
+			this.ToolStripMenuItemOriginalRecover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+			this.ToolStripMenuItemOriginalRecover.ForeColor = System.Drawing.Color.White;
+			this.ToolStripMenuItemOriginalRecover.Name = "ToolStripMenuItemOriginalRecover";
+			this.ToolStripMenuItemOriginalRecover.Size = new System.Drawing.Size(204, 22);
+			this.ToolStripMenuItemOriginalRecover.Text = "Восстановить исходное";
+			this.ToolStripMenuItemOriginalRecover.Click += new System.EventHandler(this.ToolStripMenuItemOriginalRecoverClick);
 			// 
 			// label_original_image
 			// 
@@ -126,163 +126,163 @@ namespace PhotoFiltering {
 			this.label_modified_image.TabIndex = 5;
 			this.label_modified_image.Text = "Модифицированное изображение:";
 			// 
-			// pictureBox_original
+			// pictureBoxOriginal
 			// 
-			this.pictureBox_original.Location = new System.Drawing.Point(12, 48);
-			this.pictureBox_original.Name = "pictureBox_original";
-			this.pictureBox_original.Size = new System.Drawing.Size(512, 512);
-			this.pictureBox_original.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.pictureBox_original.TabIndex = 6;
-			this.pictureBox_original.TabStop = false;
+			this.pictureBoxOriginal.Location = new System.Drawing.Point(12, 48);
+			this.pictureBoxOriginal.Name = "pictureBoxOriginal";
+			this.pictureBoxOriginal.Size = new System.Drawing.Size(512, 512);
+			this.pictureBoxOriginal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.pictureBoxOriginal.TabIndex = 6;
+			this.pictureBoxOriginal.TabStop = false;
 			// 
-			// pictureBox_modified
+			// pictureBoxModified
 			// 
-			this.pictureBox_modified.Location = new System.Drawing.Point(530, 48);
-			this.pictureBox_modified.Name = "pictureBox_modified";
-			this.pictureBox_modified.Size = new System.Drawing.Size(512, 512);
-			this.pictureBox_modified.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.pictureBox_modified.TabIndex = 7;
-			this.pictureBox_modified.TabStop = false;
+			this.pictureBoxModified.Location = new System.Drawing.Point(530, 48);
+			this.pictureBoxModified.Name = "pictureBoxModified";
+			this.pictureBoxModified.Size = new System.Drawing.Size(512, 512);
+			this.pictureBoxModified.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.pictureBoxModified.TabIndex = 7;
+			this.pictureBoxModified.TabStop = false;
 			// 
-			// button_remember_modified
+			// buttonRememberModified
 			// 
-			this.button_remember_modified.Location = new System.Drawing.Point(792, 659);
-			this.button_remember_modified.Name = "button_remember_modified";
-			this.button_remember_modified.Size = new System.Drawing.Size(250, 30);
-			this.button_remember_modified.TabIndex = 20;
-			this.button_remember_modified.Text = "Запомнить модификацию";
-			this.button_remember_modified.UseVisualStyleBackColor = true;
-			this.button_remember_modified.Click += new System.EventHandler(this.button_remember_modified_Click);
+			this.buttonRememberModified.Location = new System.Drawing.Point(792, 659);
+			this.buttonRememberModified.Name = "buttonRememberModified";
+			this.buttonRememberModified.Size = new System.Drawing.Size(250, 30);
+			this.buttonRememberModified.TabIndex = 20;
+			this.buttonRememberModified.Text = "Запомнить модификацию";
+			this.buttonRememberModified.UseVisualStyleBackColor = true;
+			this.buttonRememberModified.Click += new System.EventHandler(this.ButtonRememberModifiedClick);
 			// 
-			// button_median_filter
+			// buttonMedianFilter
 			// 
-			this.button_median_filter.Location = new System.Drawing.Point(12, 622);
-			this.button_median_filter.Name = "button_median_filter";
-			this.button_median_filter.Size = new System.Drawing.Size(170, 30);
-			this.button_median_filter.TabIndex = 21;
-			this.button_median_filter.Text = "Медианный фильтр";
-			this.button_median_filter.UseVisualStyleBackColor = true;
-			this.button_median_filter.Click += new System.EventHandler(this.button_median_filter_Click);
+			this.buttonMedianFilter.Location = new System.Drawing.Point(12, 622);
+			this.buttonMedianFilter.Name = "buttonMedianFilter";
+			this.buttonMedianFilter.Size = new System.Drawing.Size(170, 30);
+			this.buttonMedianFilter.TabIndex = 21;
+			this.buttonMedianFilter.Text = "Медианный фильтр";
+			this.buttonMedianFilter.UseVisualStyleBackColor = true;
+			this.buttonMedianFilter.Click += new System.EventHandler(this.ButtonMedianFilterClick);
 			// 
-			// button_gaussian_filter
+			// buttonGaussianFilter
 			// 
-			this.button_gaussian_filter.Location = new System.Drawing.Point(188, 622);
-			this.button_gaussian_filter.Name = "button_gaussian_filter";
-			this.button_gaussian_filter.Size = new System.Drawing.Size(170, 30);
-			this.button_gaussian_filter.TabIndex = 23;
-			this.button_gaussian_filter.Text = "Фильтр Гаусса";
-			this.button_gaussian_filter.UseVisualStyleBackColor = true;
-			this.button_gaussian_filter.Click += new System.EventHandler(this.button_gaussian_filter_Click);
+			this.buttonGaussianFilter.Location = new System.Drawing.Point(188, 622);
+			this.buttonGaussianFilter.Name = "buttonGaussianFilter";
+			this.buttonGaussianFilter.Size = new System.Drawing.Size(170, 30);
+			this.buttonGaussianFilter.TabIndex = 23;
+			this.buttonGaussianFilter.Text = "Фильтр Гаусса";
+			this.buttonGaussianFilter.UseVisualStyleBackColor = true;
+			this.buttonGaussianFilter.Click += new System.EventHandler(this.ButtonGaussianFilterClick);
 			// 
-			// button_sobel_operator
+			// buttonSobelOperator
 			// 
-			this.button_sobel_operator.Location = new System.Drawing.Point(488, 622);
-			this.button_sobel_operator.Name = "button_sobel_operator";
-			this.button_sobel_operator.Size = new System.Drawing.Size(171, 30);
-			this.button_sobel_operator.TabIndex = 24;
-			this.button_sobel_operator.Text = "Собель";
-			this.button_sobel_operator.UseVisualStyleBackColor = true;
-			this.button_sobel_operator.Click += new System.EventHandler(this.button_sobel_operator_Click);
+			this.buttonSobelOperator.Location = new System.Drawing.Point(488, 622);
+			this.buttonSobelOperator.Name = "buttonSobelOperator";
+			this.buttonSobelOperator.Size = new System.Drawing.Size(171, 30);
+			this.buttonSobelOperator.TabIndex = 24;
+			this.buttonSobelOperator.Text = "Собель";
+			this.buttonSobelOperator.UseVisualStyleBackColor = true;
+			this.buttonSobelOperator.Click += new System.EventHandler(this.ButtonSobelOperatorClick);
 			// 
-			// comboBox_median_filter
+			// comboBoxMedianFilter
 			// 
-			this.comboBox_median_filter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox_median_filter.Location = new System.Drawing.Point(12, 587);
-			this.comboBox_median_filter.Name = "comboBox_median_filter";
-			this.comboBox_median_filter.Size = new System.Drawing.Size(90, 29);
-			this.comboBox_median_filter.TabIndex = 25;
+			this.comboBoxMedianFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxMedianFilter.Location = new System.Drawing.Point(12, 587);
+			this.comboBoxMedianFilter.Name = "comboBoxMedianFilter";
+			this.comboBoxMedianFilter.Size = new System.Drawing.Size(90, 29);
+			this.comboBoxMedianFilter.TabIndex = 25;
 			// 
-			// button_add_noise
+			// buttonAddNoise
 			// 
-			this.button_add_noise.Location = new System.Drawing.Point(871, 622);
-			this.button_add_noise.Name = "button_add_noise";
-			this.button_add_noise.Size = new System.Drawing.Size(171, 30);
-			this.button_add_noise.TabIndex = 26;
-			this.button_add_noise.Text = "Добавить шум";
-			this.button_add_noise.UseVisualStyleBackColor = true;
-			this.button_add_noise.Click += new System.EventHandler(this.button_add_noise_Click);
+			this.buttonAddNoise.Location = new System.Drawing.Point(871, 622);
+			this.buttonAddNoise.Name = "buttonAddNoise";
+			this.buttonAddNoise.Size = new System.Drawing.Size(171, 30);
+			this.buttonAddNoise.TabIndex = 26;
+			this.buttonAddNoise.Text = "Добавить шум";
+			this.buttonAddNoise.UseVisualStyleBackColor = true;
+			this.buttonAddNoise.Click += new System.EventHandler(this.ButtonAddNoiseClick);
 			// 
-			// comboBox_gaussian_filter
+			// comboBoxGaussianFilter
 			// 
-			this.comboBox_gaussian_filter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox_gaussian_filter.Location = new System.Drawing.Point(188, 586);
-			this.comboBox_gaussian_filter.Name = "comboBox_gaussian_filter";
-			this.comboBox_gaussian_filter.Size = new System.Drawing.Size(90, 29);
-			this.comboBox_gaussian_filter.TabIndex = 27;
+			this.comboBoxGaussianFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxGaussianFilter.Location = new System.Drawing.Point(188, 586);
+			this.comboBoxGaussianFilter.Name = "comboBoxGaussianFilter";
+			this.comboBoxGaussianFilter.Size = new System.Drawing.Size(90, 29);
+			this.comboBoxGaussianFilter.TabIndex = 27;
 			// 
-			// numericUpDown_gaussian_filter
+			// numericUpDownGaussianFilterWeight
 			// 
-			this.numericUpDown_gaussian_filter.DecimalPlaces = 2;
-			this.numericUpDown_gaussian_filter.Increment = new decimal(new int[] {
+			this.numericUpDownGaussianFilterWeight.DecimalPlaces = 2;
+			this.numericUpDownGaussianFilterWeight.Increment = new decimal(new int[] {
             5,
             0,
             0,
             131072});
-			this.numericUpDown_gaussian_filter.Location = new System.Drawing.Point(289, 587);
-			this.numericUpDown_gaussian_filter.Maximum = new decimal(new int[] {
+			this.numericUpDownGaussianFilterWeight.Location = new System.Drawing.Point(289, 587);
+			this.numericUpDownGaussianFilterWeight.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-			this.numericUpDown_gaussian_filter.Name = "numericUpDown_gaussian_filter";
-			this.numericUpDown_gaussian_filter.Size = new System.Drawing.Size(69, 29);
-			this.numericUpDown_gaussian_filter.TabIndex = 28;
-			this.numericUpDown_gaussian_filter.Value = new decimal(new int[] {
+			this.numericUpDownGaussianFilterWeight.Name = "numericUpDownGaussianFilterWeight";
+			this.numericUpDownGaussianFilterWeight.Size = new System.Drawing.Size(69, 29);
+			this.numericUpDownGaussianFilterWeight.TabIndex = 28;
+			this.numericUpDownGaussianFilterWeight.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
 			// 
-			// button_sharpening
+			// buttonSharpening
 			// 
-			this.button_sharpening.Location = new System.Drawing.Point(665, 622);
-			this.button_sharpening.Name = "button_sharpening";
-			this.button_sharpening.Size = new System.Drawing.Size(200, 30);
-			this.button_sharpening.TabIndex = 29;
-			this.button_sharpening.Text = "Повышение резкости";
-			this.button_sharpening.UseVisualStyleBackColor = true;
-			this.button_sharpening.Click += new System.EventHandler(this.button_sharpening_Click);
+			this.buttonSharpening.Location = new System.Drawing.Point(665, 622);
+			this.buttonSharpening.Name = "buttonSharpening";
+			this.buttonSharpening.Size = new System.Drawing.Size(200, 30);
+			this.buttonSharpening.TabIndex = 29;
+			this.buttonSharpening.Text = "Повышение резкости";
+			this.buttonSharpening.UseVisualStyleBackColor = true;
+			this.buttonSharpening.Click += new System.EventHandler(this.ButtonSharpeningClick);
 			// 
-			// numericUpDown_sharpening_degree
+			// numericUpDownSharpeningDegree
 			// 
-			this.numericUpDown_sharpening_degree.DecimalPlaces = 2;
-			this.numericUpDown_sharpening_degree.Increment = new decimal(new int[] {
+			this.numericUpDownSharpeningDegree.DecimalPlaces = 2;
+			this.numericUpDownSharpeningDegree.Increment = new decimal(new int[] {
             5,
             0,
             0,
             131072});
-			this.numericUpDown_sharpening_degree.Location = new System.Drawing.Point(665, 590);
-			this.numericUpDown_sharpening_degree.Maximum = new decimal(new int[] {
+			this.numericUpDownSharpeningDegree.Location = new System.Drawing.Point(665, 590);
+			this.numericUpDownSharpeningDegree.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-			this.numericUpDown_sharpening_degree.Name = "numericUpDown_sharpening_degree";
-			this.numericUpDown_sharpening_degree.Size = new System.Drawing.Size(69, 29);
-			this.numericUpDown_sharpening_degree.TabIndex = 30;
-			this.numericUpDown_sharpening_degree.Value = new decimal(new int[] {
+			this.numericUpDownSharpeningDegree.Name = "numericUpDownSharpeningDegree";
+			this.numericUpDownSharpeningDegree.Size = new System.Drawing.Size(69, 29);
+			this.numericUpDownSharpeningDegree.TabIndex = 30;
+			this.numericUpDownSharpeningDegree.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
 			// 
-			// numericUpDown_noise
+			// numericUpDownNoise
 			// 
-			this.numericUpDown_noise.Location = new System.Drawing.Point(871, 590);
-			this.numericUpDown_noise.Maximum = new decimal(new int[] {
+			this.numericUpDownNoise.Location = new System.Drawing.Point(871, 590);
+			this.numericUpDownNoise.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-			this.numericUpDown_noise.Minimum = new decimal(new int[] {
+			this.numericUpDownNoise.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-			this.numericUpDown_noise.Name = "numericUpDown_noise";
-			this.numericUpDown_noise.Size = new System.Drawing.Size(69, 29);
-			this.numericUpDown_noise.TabIndex = 31;
-			this.numericUpDown_noise.Value = new decimal(new int[] {
+			this.numericUpDownNoise.Name = "numericUpDownNoise";
+			this.numericUpDownNoise.Size = new System.Drawing.Size(69, 29);
+			this.numericUpDownNoise.TabIndex = 31;
+			this.numericUpDownNoise.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -349,19 +349,19 @@ namespace PhotoFiltering {
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.numericUpDown_noise);
-			this.Controls.Add(this.numericUpDown_sharpening_degree);
-			this.Controls.Add(this.button_sharpening);
-			this.Controls.Add(this.numericUpDown_gaussian_filter);
-			this.Controls.Add(this.comboBox_gaussian_filter);
-			this.Controls.Add(this.button_add_noise);
-			this.Controls.Add(this.comboBox_median_filter);
-			this.Controls.Add(this.button_sobel_operator);
-			this.Controls.Add(this.button_gaussian_filter);
-			this.Controls.Add(this.button_median_filter);
-			this.Controls.Add(this.button_remember_modified);
-			this.Controls.Add(this.pictureBox_modified);
-			this.Controls.Add(this.pictureBox_original);
+			this.Controls.Add(this.numericUpDownNoise);
+			this.Controls.Add(this.numericUpDownSharpeningDegree);
+			this.Controls.Add(this.buttonSharpening);
+			this.Controls.Add(this.numericUpDownGaussianFilterWeight);
+			this.Controls.Add(this.comboBoxGaussianFilter);
+			this.Controls.Add(this.buttonAddNoise);
+			this.Controls.Add(this.comboBoxMedianFilter);
+			this.Controls.Add(this.buttonSobelOperator);
+			this.Controls.Add(this.buttonGaussianFilter);
+			this.Controls.Add(this.buttonMedianFilter);
+			this.Controls.Add(this.buttonRememberModified);
+			this.Controls.Add(this.pictureBoxModified);
+			this.Controls.Add(this.pictureBoxOriginal);
 			this.Controls.Add(this.label_modified_image);
 			this.Controls.Add(this.label_original_image);
 			this.Controls.Add(this.menuStrip);
@@ -373,11 +373,11 @@ namespace PhotoFiltering {
 			this.Text = "Фотофильтры";
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox_original)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox_modified)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_gaussian_filter)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_sharpening_degree)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_noise)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxOriginal)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxModified)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownGaussianFilterWeight)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownSharpeningDegree)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNoise)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -387,24 +387,24 @@ namespace PhotoFiltering {
 
 		private System.Windows.Forms.MenuStrip menuStrip;
 		private System.Windows.Forms.ToolStripMenuItem File_ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem OpenFile_ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem SaveAsFile_ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem OriginalRecover_ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemOpenFile;
+		private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemSaveAsFile;
+		private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemOriginalRecover;
 		private System.Windows.Forms.Label label_original_image;
 		private System.Windows.Forms.Label label_modified_image;
-		private System.Windows.Forms.PictureBox pictureBox_original;
-		private System.Windows.Forms.PictureBox pictureBox_modified;
-		private System.Windows.Forms.Button button_remember_modified;
-		private System.Windows.Forms.Button button_median_filter;
-		private System.Windows.Forms.Button button_gaussian_filter;
-		private System.Windows.Forms.Button button_sobel_operator;
-		private System.Windows.Forms.ComboBox comboBox_median_filter;
-		private System.Windows.Forms.Button button_add_noise;
-		private System.Windows.Forms.ComboBox comboBox_gaussian_filter;
-		private System.Windows.Forms.NumericUpDown numericUpDown_gaussian_filter;
-		private System.Windows.Forms.Button button_sharpening;
-		private System.Windows.Forms.NumericUpDown numericUpDown_sharpening_degree;
-		private System.Windows.Forms.NumericUpDown numericUpDown_noise;
+		private System.Windows.Forms.PictureBox pictureBoxOriginal;
+		private System.Windows.Forms.PictureBox pictureBoxModified;
+		private System.Windows.Forms.Button buttonRememberModified;
+		private System.Windows.Forms.Button buttonMedianFilter;
+		private System.Windows.Forms.Button buttonGaussianFilter;
+		private System.Windows.Forms.Button buttonSobelOperator;
+		private System.Windows.Forms.ComboBox comboBoxMedianFilter;
+		private System.Windows.Forms.Button buttonAddNoise;
+		private System.Windows.Forms.ComboBox comboBoxGaussianFilter;
+		private System.Windows.Forms.NumericUpDown numericUpDownGaussianFilterWeight;
+		private System.Windows.Forms.Button buttonSharpening;
+		private System.Windows.Forms.NumericUpDown numericUpDownSharpeningDegree;
+		private System.Windows.Forms.NumericUpDown numericUpDownNoise;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label3;
