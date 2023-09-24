@@ -5,84 +5,87 @@ using System.Runtime.InteropServices;
 
 namespace PhotoFiltering {
 	class Sharpening {
+		/// <summary>
+		/// Повышение резкости изображения, используя матрицу 3х3
+		/// </summary>
+		/// <param name="original"></param>
+		/// <param name="modified"></param>
+		/// <param name="k"></param>
+		public static void Apply(Bitmap original, ref Bitmap modified, double k) {
 
-        public static void Apply(Bitmap original, ref Bitmap modified, double k) {
-            /*
-             * Повышение резкости
-             * Используется матрица 3х3
-             */
+			Bitmap sharpenImage = (Bitmap)original.Clone();
 
-            Bitmap sharpenImage = (Bitmap)original.Clone();
+			int width = original.Width;
+			int height = original.Height;
 
+			// Фильтр повышения резкости
+			int filterWidth = 3, filterHeight = 3;
+			double[,] filter = new double[,] {
+				{ -k/8 , -k/8, -k/8 },
+				{ -k/8 , k + 1, -k/8 },
+				{ -k/8 , -k/8, -k/8 }
+			};
 
+			double factor = 1.0;
+			double bias = 0.0;
 
-            int width = original.Width;
-            int height = original.Height;
+			Color[,] result = new Color[width, height];
 
-            // фильтр повышения резкости
-            int filterWidth = 3, filterHeight = 3;
-            double[,] filter = new double[,] {
-                { -k/8 , -k/8, -k/8 },
-                { -k/8 , k + 1, -k/8 },
-                { -k/8 , -k/8, -k/8 }
-            };
+			BitmapData srcData = sharpenImage.LockBits(
+				new Rectangle(0, 0, width, height),
+				ImageLockMode.ReadWrite,
+				PixelFormat.Format24bppRgb
+			);
 
-            double factor = 1.0;
-            double bias = 0.0;
+			int bytes = srcData.Stride * srcData.Height;
+			byte[] buffer = new byte[bytes];
 
-            Color[,] result = new Color[width, height];
+			Marshal.Copy(srcData.Scan0, buffer, 0, bytes);
 
-            BitmapData srcData = sharpenImage.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+			int rgb;
+			for (int x = 0; x < width; ++x) {
+				for (int y = 0; y < height; ++y) {
+					double red = 0.0, green = 0.0, blue = 0.0;
 
-            int bytes = srcData.Stride * srcData.Height;
-            byte[] buffer = new byte[bytes];
+					for (int filterX = 0; filterX < filterWidth; filterX++) {
+						for (int filterY = 0; filterY < filterHeight; filterY++) {
+							int imageX = (x - filterWidth / 2 + filterX + width) % width;
+							int imageY = (y - filterHeight / 2 + filterY + height) % height;
 
-            Marshal.Copy(srcData.Scan0, buffer, 0, bytes);
+							rgb = imageY * srcData.Stride + 3 * imageX;
 
-            int rgb;
-            for (int x = 0; x < width; ++x) {
-                for (int y = 0; y < height; ++y) {
-                    double red = 0.0, green = 0.0, blue = 0.0;
+							red += buffer[rgb + 2] * filter[filterX, filterY];
+							green += buffer[rgb + 1] * filter[filterX, filterY];
+							blue += buffer[rgb + 0] * filter[filterX, filterY];
+						}
 
-                    for (int filterX = 0; filterX < filterWidth; filterX++) {
-                        for (int filterY = 0; filterY < filterHeight; filterY++) {
-                            int imageX = (x - filterWidth / 2 + filterX + width) % width;
-                            int imageY = (y - filterHeight / 2 + filterY + height) % height;
+						int r = Math.Min(Math.Max((int)(factor * red + bias), 0), 255);
+						int g = Math.Min(Math.Max((int)(factor * green + bias), 0), 255);
+						int b = Math.Min(Math.Max((int)(factor * blue + bias), 0), 255);
 
-                            rgb = imageY * srcData.Stride + 3 * imageX;
+						result[x, y] = Color.FromArgb(r, g, b);
+					}
+				}
+			}
 
-                            red += buffer[rgb + 2] * filter[filterX, filterY];
-                            green += buffer[rgb + 1] * filter[filterX, filterY];
-                            blue += buffer[rgb + 0] * filter[filterX, filterY];
-                        }
-                        int r = Math.Min(Math.Max((int)(factor * red + bias), 0), 255);
-                        int g = Math.Min(Math.Max((int)(factor * green + bias), 0), 255);
-                        int b = Math.Min(Math.Max((int)(factor * blue + bias), 0), 255);
+			for (int x = 0; x < width; ++x) {
+				for (int y = 0; y < height; ++y) {
+					rgb = y * srcData.Stride + 3 * x;
 
-                        result[x, y] = Color.FromArgb(r, g, b);
-                    }
-                }
-            }
+					buffer[rgb + 2] = result[x, y].R;
+					buffer[rgb + 1] = result[x, y].G;
+					buffer[rgb + 0] = result[x, y].B;
+				}
+			}
 
-            for (int x = 0; x < width; ++x) 
-                for (int y = 0; y < height; ++y) {
-                    rgb = y * srcData.Stride + 3 * x;
+			Marshal.Copy(buffer, 0, srcData.Scan0, bytes);
+			sharpenImage.UnlockBits(srcData);
 
-                    buffer[rgb + 2] = result[x, y].R;
-                    buffer[rgb + 1] = result[x, y].G;
-                    buffer[rgb + 0] = result[x, y].B;
-                }
-            
+			// Копируем в modified полученное изображение с повышенной резкостью
+			modified = (Bitmap)sharpenImage.Clone();
 
-
-            Marshal.Copy(buffer, 0, srcData.Scan0, bytes);
-            sharpenImage.UnlockBits(srcData);
-
-            // копируем в modified полученное изображение с повышенной резкостью
-            modified = (Bitmap)sharpenImage.Clone();
-
-            // освобождаем ресурсы
-            sharpenImage.Dispose();
-        }
-    }
+			// Освобождаем ресурсы
+			sharpenImage.Dispose();
+		}
+	}
 }
